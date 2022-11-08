@@ -1,0 +1,106 @@
+<%- include('../partials/header'); -%>
+<%- include('../partials/menus') %>
+<body>
+  <main>
+    <div class="" style="background-color:#696969;">
+      <div class="container-fluid" style="padding: 2%; ">
+        <form class="" action="/get_song" method="post">
+          <div class="row">
+            <div class="col-3">
+
+            </div>
+            <div class="col-5">
+              <input class="form-control" type="text" name="title" placeholder="Enter Song Name">
+            </div>
+            <div class="col-1">
+              <input class="btn btn-light" type="submit" name="Submit" value = "Submit"/>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="container-lg" style="margin-top: 2%;">
+        <% if (tracks[0]) { var track = tracks[0];%>
+          <div class="card border-0" style="width: 36rem">
+            <div class="card-body">
+              <% if(!track.artworkUrl100) { %>
+                  <img src="https://eagle-sensors.com/wp-content/uploads/unavailable-image.jpg" alt="Image Unavailable">
+              <% } else { %>
+              <img src="<%=track.artworkUrl100%>" alt="<%=track.trackName%>">
+              <% } %>
+              <% if(!track.trackName) { %>
+                  <h4 class="card-title">-</h4>
+              <% } else { %>
+                  <h4 class="card-title"><%=track.trackName%></h4>
+              <% } %>
+              <body>
+                <% if(!track.artistViewUrl) { %>
+                    <h4 class="card-title">-</h4>
+                <% } else { %>
+                    <a href="<%=track.artistViewUrl%>" class="btn btn-primary"><%=track.artistName%></a>
+                <% } %>
+                <a href="#myModal" class="btn btn-primary" data-toggle="modal">Add Review</a>
+                
+                <div id="myModal" class="modal fade">
+                  <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                      <form action="/main/review" method="post">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Add Review</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col-3">
+                              <div class="card" style="height: 2.5rem; padding: .8rem;">
+                                <h5 class="card-subtitle mb-2 text-muted">Song Name</h4>
+                              </div>
+                            </div>
+                            <div class="col-9">
+                              <input type="text" class="form-control" placeholder="<%=track.trackName%>" readonly/>
+                              <input type="hidden" class="form-control" name="songName" id="songName" value="<%=track.trackName%>"/>
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-3">
+                              <div class="card" style="height: 2.5rem; padding: .8rem;">
+                                <h5 class="card-subtitle mb-2 text-muted">Enter you review here:</h4>
+                              </div>
+                            </div>
+                            <div class="col-9">
+                              <textarea class="form-control" id="review" name="review" rows="20" cols="109"></textarea>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-3" style="padding-left: 65.5rem;">
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <br><br>
+                <h5 class="card-subtitle mb-2 text-muted">Genre:</h5>
+                <% if(!track.artistViewUrl) { %>
+                    <h4 class="card-title">-</h4>
+                <% } else { %>
+                    <p class="card-text"><%=track.primaryGenreName%></p>
+                <% } %>
+                <h5 class="card-subtitle mb-2 text-muted">Release Date:</h5>
+                <% if(!track.artistViewUrl) { %>
+                    <h4 class="card-title">-</h4>
+                <% } else { %>
+                    <p class="card-text"><%=track.releaseDate%></p>
+                <% } %>
+              </body>
+            </div>
+          </div>
+        <% } %>
+      </div>
+    </main>
+</body>
+<%- include('../partials/footer'); -%>

@@ -1,0 +1,48 @@
+<%- include('../partials/header'); -%>
+<%- include('../partials/menus') %>
+<body>
+    <div class="container-fluid" style="padding: 2%; ">
+        <form class="" action="/reviews/filter" method="post">
+            <h5 style="text-align: center;">Song Reviews</h5>
+            <div class="row">
+                <div class="col-3">
+
+                </div>
+                <div class="col-5">
+                <input class="form-control" type="text" name="song" placeholder="Enter Song Name">
+                </div>
+                <div class="col-1">
+                <input class="btn btn-primary" type="submit" name="filter" value = "Filter" style="width: 150px;"/>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <table class="table table-bordered" id="review-table">
+            <tr>
+                <th class="text-left">Song</th>
+                <th class="text-left">Review</th>
+                <th class="text-left">Review Date</th>
+            </tr>
+            <form class="" action="/reviews" method="get">
+
+            <% if(filtered.length > 0){
+                filtered.forEach(function(item) { %>
+                <tr>
+                    <td><%=item.song%></td>
+                    <td><%=item.review%></td>
+                    <td><%=item.review_date%></td>
+                </tr>
+            <% }); }
+            else if(reviews){ 
+                reviews.forEach(function(item) { %>
+                <tr>
+                    <td><%=item.song%></td>
+                    <td><%=item.review%></td>
+                    <td><%=item.review_date%></td>
+                </tr>
+            <% }); } %>
+            </form>
+        </table>
+    </div>
+</body>
